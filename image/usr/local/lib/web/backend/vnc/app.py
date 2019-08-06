@@ -47,6 +47,12 @@ def apihealth():
     abort(503, 'unhealthy')
 
 
+@app.route(PREFIX+'/api/shutdown')
+def apishutdown():
+    print("Shutting down system...")
+    os.system("kill -3 $(cat '/var/run/supervisord.pid')")
+    return "System shut down successfully."
+
 @app.route(PREFIX+'/api/reset')
 def reset():
     if 'w' in request.args and 'h' in request.args:
